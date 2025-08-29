@@ -1,18 +1,18 @@
-# 🔍 User Profile Scraper
+# 🔍 AI-Powered User Profile Scraper
 
 An AI-powered web scraping service that extracts user profile information from websites using multiple extraction strategies including CSS selectors, site-specific adapters, and Google's Gemini 2.0 Flash AI model.
 
-## 🚀 Features
+---
 
-- **Multi-Strategy Extraction**: CSS selectors, AI-powered analysis, and site-specific adapters
-- **AI Integration**: Uses Google Gemini 2.0 Flash for intelligent content analysis
-- **Site-Specific Support**: Optimized extractors for LinkedIn, GitHub, Twitter, and company team pages
-- **Smart Caching**: In-memory caching with configurable TTL
-- **Rate Limiting**: Built-in protection against API abuse
-- **RESTful API**: Clean FastAPI endpoints with automatic documentation
-- **Real-time Validation**: URL validation and accessibility checking
+## 🚀 Live Demo & Repository
 
-## 🏗️ Architecture
+- **GitHub Repository:** [https://github.com/Jaya3110/profile-scrape](https://github.com/Jaya3110/profile-scrape)
+- **Backend API:** [https://profile-scrape.onrender.com](https://profile-scrape.onrender.com)
+- **Frontend UI:** [https://profile-scrape.vercel.app](https://profile-scrape.vercel.app)
+
+---
+
+## 🏗️ Architecture Overview
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
@@ -25,14 +25,20 @@ An AI-powered web scraping service that extracts user profile information from w
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
+---
+
 ## 🛠️ Technology Stack
 
-- **Backend**: Python 3.8+, FastAPI, Uvicorn
-- **Scraping**: BeautifulSoup4, httpx, fake-useragent
-- **AI**: Google Gemini 2.0 Flash API
-- **Data Models**: Pydantic for validation
-- **Caching**: In-memory with TTL
-- **Rate Limiting**: Custom implementation
+- **Backend:** Python 3.8+, FastAPI, Uvicorn
+- **Scraping:** BeautifulSoup4, httpx, fake-useragent
+- **AI:** Google Gemini 2.0 Flash API
+- **Data Models:** Pydantic for validation
+- **Caching:** In-memory with TTL
+- **Rate Limiting:** Custom implementation
+- **Frontend:** HTML, CSS, JavaScript, Axios
+- **Deployment:** Render (backend), Vercel (frontend)
+
+---
 
 ## 📋 Prerequisites
 
@@ -40,52 +46,68 @@ An AI-powered web scraping service that extracts user profile information from w
 - Google AI Studio account (for Gemini API key)
 - Modern web browser
 
-## 🚀 Quick Start
+---
 
-### 1. Clone and Setup
+## 🚀 Quick Start (Local Development)
+
+### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
-cd web-scrape
+git clone https://github.com/Jaya3110/profile-scrape.git
+cd profile-scrape
+```
+
+### 2. Setup Python environment and install dependencies
+
+```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+# On Windows
+venv\Scripts\activate
+# On macOS/Linux
+source venv/bin/activate
+
 pip install -r requirements.txt
 ```
 
-### 2. Configure Environment
+### 3. Configure environment variables
 
 ```bash
 cp env.example .env
 # Edit .env and add your Gemini API key
 ```
 
-Get your Gemini API key from [Google AI Studio](https://aistudio.google.com/)
+Get your Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
 
-### 3. Run the Backend
+### 4. Run the backend API server
 
 ```bash
 python main.py
 ```
 
-The API will be available at `http://localhost:8000`
+The API will be available at `http://localhost:8000`.
 
-### 4. Open Frontend
+### 5. Serve the frontend
 
-Open `index.html` in your browser or serve it with a local server:
+You can open `index.html` directly in your browser or serve it with a local HTTP server:
 
 ```bash
 python -m http.server 3000
-# Then open http://localhost:3000
 ```
+
+Open `http://localhost:3000` in your browser.
+
+---
 
 ## 📚 API Endpoints
 
 ### Health Check
+
 ```http
 GET /api/health
 ```
 
 ### URL Validation
+
 ```http
 POST /api/validate-url
 Content-Type: application/json
@@ -96,6 +118,7 @@ Content-Type: application/json
 ```
 
 ### Profile Scraping
+
 ```http
 POST /api/scrape
 Content-Type: application/json
@@ -108,138 +131,97 @@ Content-Type: application/json
 ```
 
 ### Get Cached Profiles
+
 ```http
 GET /api/profiles
 ```
+
+---
 
 ## 🔧 Configuration
 
 ### Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `GEMINI_API_KEY` | Google Gemini API key | Required |
-| `PORT` | Server port | 8000 |
-| `MAX_REQUESTS_PER_MINUTE` | Rate limit | 10 |
-| `CACHE_TTL_HOURS` | Cache duration | 24 |
+| Variable              | Description               | Default |
+|-----------------------|---------------------------|---------|
+| `GEMINI_API_KEY`      | Google Gemini API key      | Required|
+| `PORT`                | Server port               | 8000    |
+| `MAX_REQUESTS_PER_MINUTE` | Rate limit             | 10      |
+| `CACHE_TTL_HOURS`     | Cache duration (hours)    | 24      |
 
 ### Rate Limiting
 
-- **Default**: 10 requests per minute per IP
-- **Configurable**: Modify in `rate_limiter.py`
-- **Headers**: Rate limit info included in responses
+- Default: 10 requests per minute per IP
+- Configurable in `rate_limiter.py`
+- Rate limit info included in API response headers
+
+---
 
 ## 🎯 Extraction Strategies
 
-### 1. CSS Selector Extraction
-- Common profile patterns (`.profile-name`, `.job-title`, etc.)
-- Social media link detection
-- Image and bio extraction
-- Confidence scoring based on data quality
+1. **CSS Selector Extraction**  
+   Uses common CSS selectors to find profile data like names, titles, emails, social links, and images.
 
-### 2. AI-Powered Extraction
-- Google Gemini 2.0 Flash analysis
-- Intelligent content parsing
-- Context-aware information extraction
-- Fallback to manual parsing if JSON fails
+2. **AI-Powered Extraction**  
+   Uses Google Gemini 2.0 Flash AI to analyze page content and extract profile information intelligently.
 
-### 3. Site-Specific Adapters
-- **LinkedIn**: Profile pages with optimized selectors
-- **GitHub**: User profiles and repositories
-- **Twitter**: Profile information extraction
-- **Company Pages**: Team member detection
+3. **Site-Specific Adapters**  
+   Optimized extractors for LinkedIn, GitHub, Twitter, and company team pages.
 
-## 📊 Data Models
-
-### Profile Object
-```json
-{
-  "id": "uuid",
-  "name": "John Doe",
-  "title": "Software Engineer",
-  "email": "john@example.com",
-  "phone": "+1-555-0123",
-  "image": "https://example.com/avatar.jpg",
-  "bio": "Passionate developer...",
-  "company": "Tech Corp",
-  "location": "San Francisco, CA",
-  "social_links": {
-    "linkedin": "https://linkedin.com/in/johndoe",
-    "github": "https://github.com/johndoe",
-    "twitter": "https://twitter.com/johndoe"
-  },
-  "extracted_from": "https://example.com/profile",
-  "confidence": 0.92,
-  "extraction_strategy": "ai_extraction"
-}
-```
-
-## 🚀 Deployment
-
-### Local Development
-```bash
-python main.py
-```
-
-### Production (Railway/Render)
-1. Push code to GitHub
-2. Connect to Railway/Render
-3. Set environment variables
-4. Deploy
-
-### Frontend Deployment (Vercel)
-1. Upload `index.html` and assets
-2. Configure CORS in backend
-3. Update API endpoints
+---
 
 ## 🔒 Security Features
 
-- **Input Validation**: URL format and accessibility checking
-- **Rate Limiting**: Prevents API abuse
-- **CORS Configuration**: Configurable origin restrictions
-- **Error Handling**: Safe error responses
-- **Resource Limits**: Timeout and size constraints
+- Input validation and URL accessibility checks
+- Rate limiting to prevent abuse
+- CORS configured to allow frontend access
+- Safe error handling and resource limits
+
+---
 
 ## 📈 Performance
 
-- **Caching**: 24-hour TTL for scraped results
-- **Async Processing**: Non-blocking I/O operations
-- **Smart Retries**: AI extraction with fallback strategies
-- **Memory Management**: Automatic cache cleanup
+- 24-hour in-memory caching of scraped results
+- Async non-blocking I/O operations
+- Smart retries and fallback strategies for AI extraction
+- Automatic cache cleanup
+
+---
 
 ## 🧪 Testing
 
-### Manual Testing
+### Manual Testing with curl
+
 ```bash
-# Test health endpoint
 curl http://localhost:8000/api/health
 
-# Test scraping
 curl -X POST http://localhost:8000/api/scrape \
   -H "Content-Type: application/json" \
   -d '{"url": "https://github.com/username"}'
 ```
 
 ### Test URLs
+
 - LinkedIn: `https://linkedin.com/in/username`
 - GitHub: `https://github.com/username`
 - Company Team: `https://company.com/about/team`
 
-## 🐛 Troubleshooting
+---
 
-### Common Issues
+## 🚀 Deployment
 
-1. **Gemini API Error**: Check API key and quota
-2. **Scraping Timeout**: Increase timeout in request
-3. **Rate Limit**: Wait for reset or increase limits
-4. **CORS Issues**: Check frontend domain configuration
+### Backend (Render)
 
-### Debug Mode
-```bash
-# Enable debug logging
-export LOG_LEVEL=DEBUG
-python main.py
-```
+- Uses `render.yaml` for deployment configuration
+- Automatically installs dependencies and runs `uvicorn main:app`
+- Environment variables configured via Render dashboard
+
+### Frontend (Vercel)
+
+- Uses `vercel.json` to serve `index.html` as a static site
+- Deployed on [https://profile-scrape.vercel.app](https://profile-scrape.vercel.app)
+
+---
 
 ## 🤝 Contributing
 
@@ -248,9 +230,13 @@ python main.py
 3. Add tests for new functionality
 4. Submit a pull request
 
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
 
 ## 🙏 Acknowledgments
 
@@ -259,12 +245,11 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - FastAPI for the web framework
 - Community contributors and testers
 
-## 📞 Support
-
-- **Issues**: GitHub Issues
-- **Discussions**: GitHub Discussions
-- **Email**: [Your Email]
-
 ---
 
-**Note**: This tool is for educational and legitimate business purposes only. Always respect websites' robots.txt and terms of service.
+## 📞 Support
+
+- **Issues:** Use GitHub Issues on the repository
+- **Discussions:** Use GitHub Discussions on the repository
+- **Email:** [jaykrishna190@gmail.com]
+
